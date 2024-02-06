@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital@1&family=Protest+Riot&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Poppins', 'Protest Riot', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0099cc;
+            font-size: 16px;
+        }
+
+        .valentine_container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 10px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            body {
+                font-size: 14px;
+            }
+
+            .yesButton,
+            .noButton {
+                font-size: 18px; 
+                padding: 12px; 
+                margin-top: 8px; 
+            }
+        }
+
+        .yesButton,
+        .noButton {
+            font-size: 16px;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .yesButton {
+            color: white;
+            background-color: green;
+        }
+
+        .noButton {
+            color: white;
+            background-color: red;
+        }
+
+        .text {
+            font-size: 3rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        audio {
+             display: none; 
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="valentineContainer" class="valentine_container"></div>
+
+    <script>
+        const phrases = [
+            "No",
+            "Are you sure Princess?",
+            "Really really sure?",
+            "Pookie Please",
+            "Don't do this to me",
+            "I'm gonna cry...",
+            "You're breaking my heart :(",
+        ];
+
+        let noCount = 0;
+        let yesPressed = false;
+
+        function handleNoClick() {
+            noCount++;
+            render();
+        }
+
+        function getNoButtonText() {
+            return phrases[Math.min(noCount, phrases.length - 1)];
+        }
+
+        function render() {
+            const container = document.getElementById('valentineContainer');
+
+            if (yesPressed) {
+                container.innerHTML = `
+                    <img alt="bears_hugging" src="https://media.tenor.com/g0Ikld3g1TwAAAAi/z.gif">
+                    <div class="text">Yay!!!!</div>
+                `;
+            } else if (noCount > 0) {
+                const noGifUrl = "https://media.tenor.com/hRanVEh2bDEAAAAi/bear-panda.gif";
+                container.innerHTML = `
+                    <div id="imageContainer">
+                        <img alt="angry_bear" src="${noGifUrl}">
+                    </div>
+                    <div>Will you be my Valentine?</div>
+                    <div>
+                        <button class="yesButton" style="font-size: ${noCount * 20 + 16}px;" onclick="setYesPressed(true)">
+                            Yes
+                        </button>
+                        <button class="noButton" onclick="handleNoClick()">
+                            ${getNoButtonText()}
+                        </button>
+                    </div>
+                `;
+            } else {
+                const initialGifUrl = "https://media.tenor.com/mjtd8U7yIDUAAAAi/milk-mocha.gif";
+                container.innerHTML = `
+                    <div id="imageContainer">
+                        <img alt="bear-patting-head" src="${initialGifUrl}">
+                    </div>
+                    <div>Will you be my Valentine?</div>
+                    <div>
+                        <button class="yesButton" style="font-size: ${noCount * 20 + 16}px;" onclick="setYesPressed(true)">
+                            Yes
+                        </button>
+                        <button class="noButton" onclick="handleNoClick()">
+                            ${getNoButtonText()}
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function setYesPressed(value) {
+            yesPressed = value;
+            render();
+        }
+
+        render();
+
+    </script>
+
+    <audio controls id="backgroundMusic" autoplay loop>
+        <source src="Until I found you - Stephen Sanchez & Em Beihold (sped up).mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+</body>
+
+</html>
